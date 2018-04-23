@@ -28,9 +28,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-web')
-//	runtime('org.postgresql:postgresql')
-	runtime('org.hsqldb:hsqldb')
+	runtime('org.postgresql:postgresql')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('org.modelmapper:modelmapper:1.1.0')
 
 }

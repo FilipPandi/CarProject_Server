@@ -2,10 +2,11 @@ package com.zadaca.zadacaprojekt.service;
 
 import com.zadaca.zadacaprojekt.dao.CarRepository;
 import com.zadaca.zadacaprojekt.domain.Cars;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarManagerImplementation implements CarManager {
@@ -22,8 +23,8 @@ public class CarManagerImplementation implements CarManager {
     }
 
     @Override
-    public List<Cars> getAllCars() {
-        return carRepository.findAll();
+    public Page<Cars> getAllCarsPage(Pageable pageable) {
+        return carRepository.findAll(pageable);
     }
 
     @Override
@@ -32,12 +33,12 @@ public class CarManagerImplementation implements CarManager {
     }
 
     @Override
-    public Cars updateCar(Cars cars) {
-        return null;
+    public List<Cars> getAllCarsList() {
+        return carRepository.findAll();
     }
 
     @Override
-    public Optional<Cars> findOne(Long id) {
-        return carRepository.findById(id);
+    public Cars getById(Long id) {
+        return carRepository.findById(id).get();
     }
 }

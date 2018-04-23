@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name= "cars")
-public class Cars {
+public class Cars{
 
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_seq")
@@ -29,37 +29,6 @@ public class Cars {
     @Column(name= "weight")
     private int weight;
 
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
+    @Embedded
+    private Manufacturer manufacturer;
 }
