@@ -83,10 +83,11 @@ public class CarController {
         carManager.deleteCar(id);
     }
 
-
     @GetMapping("/list")
     public Page<Car> findAllPage(Pageable pageable) {
 
         return carManager.getAllCarsPage(pageable);
     }
+
+
 }
