@@ -1,22 +1,23 @@
 package com.zadaca.zadacaprojekt.service;
 
-import com.zadaca.zadacaprojekt.domain.Cars;
-import com.zadaca.zadacaprojekt.domain.Manufacturer;
+import com.zadaca.zadacaprojekt.domain.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CarManager {
 
-    Cars save(Cars car);
+    Car save(Car car);
 
-    Page<Cars> getAllCarsPage(Pageable pageable);
+    Page<Car> getAllCarsPage(Pageable pageable);
 
-    List<Cars> getAllCarsList();
+    List<Car> getAllCarsList();
+
+    List<Car> findAllCarsListById(Long id);
 
    void deleteCar(Long id);
 
-    Cars getById(Long id);
+    Car getById(Long id);
+
 }

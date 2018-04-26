@@ -1,8 +1,12 @@
 package com.zadaca.zadacaprojekt.web;
 
 
-import com.zadaca.zadacaprojekt.domain.Cars;
+import com.zadaca.zadacaprojekt.domain.Car;
+import com.zadaca.zadacaprojekt.domain.Owner;
+import com.zadaca.zadacaprojekt.dto.CarDTO;
 import com.zadaca.zadacaprojekt.service.CarManager;
+import com.zadaca.zadacaprojekt.service.OwnerManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -13,58 +17,76 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping({"/cars"})
+@Slf4j
 public class CarController {
 
     private final CarManager carManager;
 
-    public CarController(CarManager carManager) {
+    private final OwnerManager ownerManager;
+
+    public CarController(CarManager carManager, OwnerManager ownerManager) {
         this.carManager = carManager;
+        this.ownerManager = ownerManager;
     }
 
 
 
     @PostMapping("/save")
-    public Cars save(@RequestBody Cars cars) {
+    public CarDTO save(@RequestBody CarDTO car) {
 
-        Cars car = new Cars(cars.getId(),cars.getName(), cars.getSpeed(), cars.getWeight(), cars.getManufacturer());
 
-        return carManager.save(car);
+        Car c = new Car();
+
+        Owner o = ownerManager.getById(car.getOwner().getId());
+        c.setOwner(o);
+
+
+
+        c.setManufacturer(car.getManufacturer());
+        c.setName(car.getName());
+        c.setSpeed(car.getSpeed());
+        c.setWeight(car.getWeight());
+        log.info("got car: {}", c);
+        CarDTO saveCar = new CarDTO(carManager.save(c));
+
+
+        return saveCar;
     }
 
 
     @PutMapping("/save/{id}")
-    public Cars updateCars(@PathVariable("id") Long id, @RequestBody Cars cars) {
+    public Car updateCars(@PathVariable("id") Long id, @RequestBody CarDTO car) {
 
+        Car c = carManager.getById(id);
+        c.setName(car.getName());
+        c.setSpeed(car.getSpeed());
+        c.setWeight(car.getWeight());
+        c.setManufacturer(car.getManufacturer());
 
-        carManager.getById(id);
-        cars.setName(cars.getName());
-        cars.setSpeed(cars.getSpeed());
-        cars.setWeight(cars.getWeight());
-        cars.setManufacturer(cars.getManufacturer());
+        Owner owner = ownerManager.getById(car.getOwner().getId());
+        c.setOwner(owner);
 
-        return carManager.save(cars);
+        return carManager.save(c);
     }
 
 
-    @GetMapping("/list/{id}")
-    public Cars findById(@PathVariable("id") Long id) {
-        return carManager.getById(id);
+    @GetMapping("/{id}")
+    public CarDTO findById(@PathVariable("id") Long id) {
+        CarDTO carDTO = new CarDTO(carManager.getById(id));
+        return carDTO;
     }
 
 
     @DeleteMapping({"/{id}"})
-    public void deleteCar(@PathVariable("id") long id) {
+    public void deleteCar(@PathVariable("id") Long id) {
+
         carManager.deleteCar(id);
     }
 
 
     @GetMapping("/list")
-    public Page<Cars> findAllPage(Pageable pageable) {
-        return carManager.getAllCarsPage(pageable);
-    }
+    public Page<Car> findAllPage(Pageable pageable) {
 
-    @GetMapping("/list/edit")
-    public List<Cars> findAllList() {
-        return carManager.getAllCarsList();
+        return carManager.getAllCarsPage(pageable);
     }
 }

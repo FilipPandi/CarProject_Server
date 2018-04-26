@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 @Embeddable
 public class Manufacturer {
 

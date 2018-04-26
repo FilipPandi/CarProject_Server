@@ -1,18 +1,21 @@
 package com.zadaca.zadacaprojekt.domain;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
 @Table(name= "cars")
-public class Cars{
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
+public class Car {
 
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_seq")
@@ -20,6 +23,7 @@ public class Cars{
     @Setter(AccessLevel.PRIVATE)
     private Long id;
 
+    @NotNull
     @Column(name= "name")
     private String name;
 
@@ -31,4 +35,9 @@ public class Cars{
 
     @Embedded
     private Manufacturer manufacturer;
+
+    @ManyToOne
+    @JoinColumn(name= "owner_id")
+    private Owner owner;
+
 }
