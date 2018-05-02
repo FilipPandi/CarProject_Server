@@ -4,8 +4,13 @@ import com.zadaca.zadacaprojekt.dao.OwnerRepository;
 import com.zadaca.zadacaprojekt.dao.ServiceRepository;
 import com.zadaca.zadacaprojekt.domain.Car;
 import com.zadaca.zadacaprojekt.domain.Owner;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +34,7 @@ public class OwnerManagerImplementation implements OwnerManager {
 
 
     @Override
-    public Page<Owner> getAllOwnerPages(Pageable pageable) {
-
+    public Page<Owner> getAllOwnerPages( Pageable pageable) {
         return ownerRepository.findAll(pageable);
     }
 

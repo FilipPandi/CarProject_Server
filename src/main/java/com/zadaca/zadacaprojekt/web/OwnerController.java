@@ -4,8 +4,11 @@ package com.zadaca.zadacaprojekt.web;
 import com.zadaca.zadacaprojekt.domain.Owner;
 import com.zadaca.zadacaprojekt.dto.OwnerDTO;
 import com.zadaca.zadacaprojekt.service.OwnerManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 
