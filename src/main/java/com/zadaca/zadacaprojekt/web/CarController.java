@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,23 +27,20 @@ public class CarController {
         this.ownerManager = ownerManager;
     }
 
-
-
     @PostMapping("/save")
     public CarDTO save(@RequestBody CarDTO car) {
-
 
         Car c = new Car();
 
         Owner o = ownerManager.getById(car.getOwner().getId());
         c.setOwner(o);
 
-
-
         c.setManufacturer(car.getManufacturer());
         c.setName(car.getName());
-        c.setSpeed(car.getSpeed());
-        c.setWeight(car.getWeight());
+        c.setCarType(car.getCarType());
+        c.setRegistrationNumber(car.getRegistrationNumber());
+        c.setYearOfProduction(car.getYearOfProduction());
+        c.setColor(car.getColor());
         log.info("got car: {}", c);
         CarDTO saveCar = new CarDTO(carManager.save(c));
 
@@ -59,8 +54,10 @@ public class CarController {
 
         Car c = carManager.getById(id);
         c.setName(car.getName());
-        c.setSpeed(car.getSpeed());
-        c.setWeight(car.getWeight());
+        c.setCarType(car.getCarType());
+        c.setRegistrationNumber(car.getRegistrationNumber());
+        c.setYearOfProduction(car.getYearOfProduction());
+        c.setColor(car.getColor());
         c.setManufacturer(car.getManufacturer());
 
         Owner owner = ownerManager.getById(car.getOwner().getId());
@@ -80,13 +77,19 @@ public class CarController {
     @DeleteMapping({"/{id}"})
     public void deleteCar(@PathVariable("id") Long id) {
 
-        carManager.deleteCar(id);
+        carManager.deleteCarById(id);
     }
 
     @GetMapping("/list")
     public Page<Car> findAllPage(Pageable pageable) {
 
-        return carManager.getAllCarsPage(pageable);
+        return carManager.getAllCarPages(pageable);
+    }
+
+
+    @GetMapping("/count")
+    public Long getCarCount() {
+        return carManager.getCarCount();
     }
 
 

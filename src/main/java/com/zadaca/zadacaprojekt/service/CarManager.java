@@ -10,13 +10,11 @@ public interface CarManager {
 
     Car save(Car car);
 
-    Page<Car> getAllCarsPage(Pageable pageable);
+    Page<Car> getAllCarPages(Pageable pageable);
 
-    List<Car> getAllCarsList();
+    Long getCarCount();
 
-    List<Car> findAllCarsListById(Long id);
-
-   void deleteCar(Long id);
+   void deleteCarById(Long id);
 
     Car getById(Long id);
 

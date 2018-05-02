@@ -9,6 +9,5 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Long> {
     @Transactional
     void deleteByOwnerId(Long ownerId);
-    List<Car> findAllById(Long Id);
 
 }

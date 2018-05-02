@@ -38,6 +38,7 @@ public class Owner {
     @Embedded
     private Address address;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "owner")
     List<Car> cars = new ArrayList<>();
 

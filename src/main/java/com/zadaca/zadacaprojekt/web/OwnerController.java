@@ -28,6 +28,7 @@ private final OwnerManager ownerManager;
             o.setLastName(owners.getLastName());
             o.setAddress(owners.getAddress());
             o.setOib(owners.getOib());
+
             OwnerDTO saveOwner = new OwnerDTO(ownerManager.save(o));
 
             return saveOwner;
@@ -36,7 +37,7 @@ private final OwnerManager ownerManager;
     @GetMapping("/list")
     public Page<Owner> getOwnersPage(Pageable pageable) {
 
-        return ownerManager.getAllOwnerPage(pageable);
+        return ownerManager.getAllOwnerPages(pageable);
     }
 
     @GetMapping("/{id}")
@@ -61,6 +62,11 @@ private final OwnerManager ownerManager;
         o.setAddress(owner.getAddress());
 
         return ownerManager.save(o);
+    }
+
+    @GetMapping("/count")
+    public Long getOwnerCount() {
+        return ownerManager.getOwnerCount();
     }
 
 }

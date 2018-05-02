@@ -1,6 +1,7 @@
 package com.zadaca.zadacaprojekt.service;
 
 import com.zadaca.zadacaprojekt.dao.CarRepository;
+import com.zadaca.zadacaprojekt.dao.ServiceRepository;
 import com.zadaca.zadacaprojekt.domain.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,10 +13,12 @@ import java.util.List;
 public class CarManagerImplementation implements CarManager {
 
     private final CarRepository carRepository;
+    private final ServiceRepository serviceRepository;
 
-    public CarManagerImplementation(CarRepository carRepository) {
+    public CarManagerImplementation(CarRepository carRepository, ServiceRepository serviceRepository) {
 
         this.carRepository = carRepository;
+        this.serviceRepository = serviceRepository;
     }
 
     @Override
@@ -25,26 +28,21 @@ public class CarManagerImplementation implements CarManager {
     }
 
     @Override
-    public Page<Car> getAllCarsPage(Pageable pageable) {
+    public Page<Car> getAllCarPages(Pageable pageable) {
 
         return carRepository.findAll(pageable);
     }
 
     @Override
-    public void deleteCar(Long id) {
+    public Long getCarCount() {
+        return carRepository.count();
+    }
 
+
+    @Override
+    public void deleteCarById(Long id) {
+        serviceRepository.deleteCarServicesByCarId(id);
         carRepository.deleteById(id);
-    }
-
-
-    @Override
-    public List<Car> getAllCarsList() {
-        return carRepository.findAll();
-    }
-
-    @Override
-    public List<Car> findAllCarsListById(Long id) {
-        return carRepository.findAllById(id);
     }
 
     @Override

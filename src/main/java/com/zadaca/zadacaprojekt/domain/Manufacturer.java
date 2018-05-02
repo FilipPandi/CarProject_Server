@@ -15,13 +15,14 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Manufacturer {
 
+    @NotNull
+    @Column(name= "car_model")
+    @Enumerated(EnumType.STRING)
+    private CarModelEnum carModelType;
 
     @NotNull
-    private String manufacturerName;
+    @Column(name= "manufacturer_enum")
+    @Enumerated(EnumType.STRING)
+    private ManufacturerEnum manufacturerType;
 
-
-    private String country;
-
-
-    private int numberOfCars;
 }

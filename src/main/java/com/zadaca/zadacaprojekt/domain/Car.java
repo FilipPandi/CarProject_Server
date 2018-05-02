@@ -1,11 +1,14 @@
 package com.zadaca.zadacaprojekt.domain;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -27,17 +30,28 @@ public class Car {
     @Column(name= "name")
     private String name;
 
-    @Column(name= "speed")
-    private int speed;
+    @Column(name= "car_type")
+    @Enumerated(EnumType.STRING)
+    private CarTypeEnum carType;
 
-    @Column(name= "weight")
-    private int weight;
+    @Column(name= "year_of_production")
+    @JsonFormat(pattern="dd.MM.yyyy")
+    private Date yearOfProduction;
+
+    @Column(name= "registration_number")
+    private String registrationNumber;
+
+    @Column(name= "color")
+    private String color;
 
     @Embedded
     private Manufacturer manufacturer;
 
-    @ManyToOne
+    @JsonManagedReference
+    @ManyToOne()
     @JoinColumn(name= "owner_id")
     private Owner owner;
 
+    @OneToMany(mappedBy = "car")
+    private List<CarService> carServices = new ArrayList<>();
 }
