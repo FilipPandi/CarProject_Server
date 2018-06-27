@@ -1,13 +1,13 @@
 package com.zadaca.zadacaprojekt.domain;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name= "cars")
+//TODO: CHECK THIS OUT!
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class Car {
 
@@ -35,8 +36,7 @@ public class Car {
     private CarTypeEnum carType;
 
     @Column(name= "year_of_production")
-    @JsonFormat(pattern="dd.MM.yyyy")
-    private Date yearOfProduction;
+    private int yearOfProduction;
 
     @Column(name= "registration_number")
     private String registrationNumber;

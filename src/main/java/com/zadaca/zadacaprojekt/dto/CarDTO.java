@@ -1,7 +1,6 @@
 package com.zadaca.zadacaprojekt.dto;
 
 import com.zadaca.zadacaprojekt.domain.Car;
-import com.zadaca.zadacaprojekt.domain.CarService;
 import com.zadaca.zadacaprojekt.domain.CarTypeEnum;
 import com.zadaca.zadacaprojekt.domain.Manufacturer;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,7 +26,7 @@ public class CarDTO {
 
     private String registrationNumber;
 
-    private Date yearOfProduction;
+    private int yearOfProduction;
 
     private String color;
 
@@ -60,6 +58,5 @@ public class CarDTO {
         });
 
     }
-
 }
 

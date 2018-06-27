@@ -4,17 +4,18 @@ package com.zadaca.zadacaprojekt.web;
 import com.zadaca.zadacaprojekt.domain.Owner;
 import com.zadaca.zadacaprojekt.dto.OwnerDTO;
 import com.zadaca.zadacaprojekt.service.OwnerManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping({"/owners"})
+@RequestMapping({"/owner"})
 public class OwnerController {
 
 private final OwnerManager ownerManager;
@@ -37,10 +38,33 @@ private final OwnerManager ownerManager;
             return saveOwner;
     }
 
-    @GetMapping("/list")
-    public Page<Owner> getOwnersPage(Pageable pageable) {
+    @PutMapping("/save/{id}")
+    public OwnerDTO updateOwner(@PathVariable("id") Long id, @RequestBody OwnerDTO owner) {
 
-        return ownerManager.getAllOwnerPages(pageable);
+        Owner o = ownerManager.getById(id);
+
+        o.setFirstName(owner.getFirstName());
+        o.setLastName(owner.getLastName());
+        o.setOib(owner.getOib());
+        o.setAddress(owner.getAddress());
+
+
+        OwnerDTO updateOwner = new OwnerDTO(ownerManager.save(o));
+        return updateOwner;
+    }
+
+
+    @GetMapping("/list")
+    public Page<OwnerDTO> getOwnersPage(Pageable pageable) {
+
+        Page<Owner> owner = ownerManager.getAllOwnerPages(pageable);
+
+        List<OwnerDTO> ownerDTOList = owner.getContent()
+                .stream()
+                .map(OwnerDTO::new)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(ownerDTOList, pageable, owner.getTotalElements());
     }
 
     @GetMapping("/{id}")
@@ -53,18 +77,6 @@ private final OwnerManager ownerManager;
     @DeleteMapping({"/{id}"})
     public void deleteOwners(@PathVariable("id") Long id) {
         ownerManager.deleteOwner(id);
-    }
-
-    @PutMapping("/save/{id}")
-    public Owner updateOwner(@PathVariable("id") Long id, @RequestBody OwnerDTO owner) {
-
-        Owner o = ownerManager.getById(id);
-        o.setFirstName(owner.getFirstName());
-        o.setLastName(owner.getLastName());
-        o.setOib(owner.getOib());
-        o.setAddress(owner.getAddress());
-
-        return ownerManager.save(o);
     }
 
     @GetMapping("/count")

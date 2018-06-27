@@ -20,7 +20,7 @@ public class CarServiceDTO {
 
     private String serviceName;
 
-    private Date serviceDate;
+    private Instant serviceDate;
 
     private String description;
 

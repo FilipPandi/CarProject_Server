@@ -8,13 +8,17 @@ import com.zadaca.zadacaprojekt.service.CarManager;
 import com.zadaca.zadacaprojekt.service.OwnerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping({"/cars"})
+@RequestMapping({"/car"})
 @Slf4j
 public class CarController {
 
@@ -29,7 +33,6 @@ public class CarController {
 
     @PostMapping("/save")
     public CarDTO save(@RequestBody CarDTO car) {
-
         Car c = new Car();
 
         Owner o = ownerManager.getById(car.getOwner().getId());
@@ -44,15 +47,17 @@ public class CarController {
         log.info("got car: {}", c);
         CarDTO saveCar = new CarDTO(carManager.save(c));
 
-
         return saveCar;
     }
 
 
     @PutMapping("/save/{id}")
-    public Car updateCars(@PathVariable("id") Long id, @RequestBody CarDTO car) {
-
+    public CarDTO updateCars(@PathVariable("id") Long id, @RequestBody CarDTO car) {
         Car c = carManager.getById(id);
+
+        Owner owner = ownerManager.getById(car.getOwner().getId());
+        c.setOwner(owner);
+
         c.setName(car.getName());
         c.setCarType(car.getCarType());
         c.setRegistrationNumber(car.getRegistrationNumber());
@@ -60,10 +65,10 @@ public class CarController {
         c.setColor(car.getColor());
         c.setManufacturer(car.getManufacturer());
 
-        Owner owner = ownerManager.getById(car.getOwner().getId());
-        c.setOwner(owner);
 
-        return carManager.save(c);
+        CarDTO updateCar = new CarDTO(carManager.save(c));
+
+        return updateCar;
     }
 
 
@@ -81,9 +86,16 @@ public class CarController {
     }
 
     @GetMapping("/list")
-    public Page<Car> findAllPage(Pageable pageable) {
+    public Page<CarDTO> findAllPage(Pageable pageable) {
 
-        return carManager.getAllCarPages(pageable);
+        Page<Car> cars = carManager.getAllCarPages(pageable);
+
+        List<CarDTO> carDTOList = cars.getContent()
+                .stream()
+                .map(CarDTO::new)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(carDTOList, pageable, cars.getTotalElements());
     }
 
 

@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.1.RELEASE'
+		springBootVersion = '2.0.3.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -22,7 +22,13 @@ repositories {
 	mavenCentral()
 }
 
-
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.group == 'org.springframework') {
+			details.useVersion '5.0.6.RELEASE'
+		}
+	}
+}
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
@@ -32,5 +38,13 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile 'org.springframework.security:spring-security-web:5.0.5.RELEASE'
+	compile 'org.springframework.security:spring-security-config:5.0.5.RELEASE'
+	compile 'com.auth0:java-jwt:3.2.0'
+	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.0.2.RELEASE'
+	compile 'org.apache.commons:commons-lang3:3.0'
+	compile 'joda-time:joda-time:2.+'
 }

@@ -1,12 +1,10 @@
 package com.zadaca.zadacaprojekt.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.Date;
 
 
 @Getter
@@ -28,7 +26,7 @@ public class CarService {
     private String serviceName;
 
     @Column(name = "service_date")
-    private Date serviceDate;
+    private Instant serviceDate;
 
     @Column(name = "worker_first_name")
     private String workerFirstName;

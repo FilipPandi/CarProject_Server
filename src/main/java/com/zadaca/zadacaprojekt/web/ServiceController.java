@@ -5,12 +5,9 @@ import com.zadaca.zadacaprojekt.domain.CarService;
 import com.zadaca.zadacaprojekt.dto.CarServiceDTO;
 import com.zadaca.zadacaprojekt.service.CarManager;
 import com.zadaca.zadacaprojekt.service.ServiceManager;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -48,7 +45,7 @@ public class ServiceController {
     }
 
     @PutMapping("/save/{id}")
-    public CarService updateCarService(@PathVariable("id") Long id, @RequestBody CarServiceDTO carServiceDTO) {
+    public CarServiceDTO updateCarService(@PathVariable("id") Long id, @RequestBody CarServiceDTO carServiceDTO) {
 
         CarService cs = serviceManager.findService(id);
 
@@ -60,17 +57,31 @@ public class ServiceController {
         cs.setPrice(carServiceDTO.getPrice());
         cs.setPayed(carServiceDTO.isPayed());
 
-        return serviceManager.save(cs);
+        CarServiceDTO updateCars = new CarServiceDTO(serviceManager.save(cs));
+        return  updateCars;
+
     }
 
     @GetMapping("/{id}")
-    public List<CarService> getCarServices(@PathVariable("id") Long id) {
-        return serviceManager.getService(id);
+    public List<CarServiceDTO> getCarServices(@PathVariable("id") Long id) {
+
+        List<CarService> carServiceList = serviceManager.getService(id);
+
+        List<CarServiceDTO> carServiceDTOList = new ArrayList<>();
+
+        carServiceList.forEach(c -> {
+            CarServiceDTO csDTO = new CarServiceDTO(c);
+            carServiceDTOList.add(csDTO);
+        });
+        return carServiceDTOList;
     }
 
     @GetMapping("/detail/{id}")
-    public CarService getCarService(@PathVariable("id") Long id) {
-        return serviceManager.findService(id);
+    public CarServiceDTO getCarService(@PathVariable("id") Long id) {
+
+        CarServiceDTO carServiceDTO = new CarServiceDTO(serviceManager.findService(id));
+
+        return carServiceDTO;
     }
 
     @DeleteMapping({"/{id}"})
@@ -79,7 +90,16 @@ public class ServiceController {
     }
 
     @GetMapping("/top")
-    public List<CarService> top10Services() {
-        return serviceManager.getTopTen();
+    public List<CarServiceDTO> top10Services() {
+
+        List<CarService> carService = serviceManager.getTopTen();
+
+        List<CarServiceDTO> carServiceDTOList = new ArrayList<>();
+
+        carService.forEach(cs -> {
+            CarServiceDTO csDTO = new CarServiceDTO(cs);
+            carServiceDTOList.add(csDTO);
+        });
+        return carServiceDTOList;
     }
 }
