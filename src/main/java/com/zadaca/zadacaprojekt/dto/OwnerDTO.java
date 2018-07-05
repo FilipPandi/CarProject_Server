@@ -48,5 +48,17 @@ public class OwnerDTO {
             car.add(carDTO);
         });
     }
+
+    @Override
+    public String toString() {
+        return "OwnerDTO{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", oib=" + oib +
+                ", address=" + address +
+                ", car=" + car +
+                '}';
+    }
 }
 

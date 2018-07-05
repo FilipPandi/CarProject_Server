@@ -1,5 +1,6 @@
 package com.zadaca.zadacaprojekt.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +46,10 @@ public class User implements UserDetails {
     @CollectionTable(name="user_permissions", joinColumns=@JoinColumn(name="user_id"))
     List<Permissions> permissions = new ArrayList<>();
 
+    @JsonBackReference
+    @OneToMany (mappedBy = "user")
+    List<ProducerMessenger> messages = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permissions.stream()
@@ -80,5 +85,16 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", repeatPassword='" + repeatPassword + '\'' +
+                ", permissions=" + permissions +
+                '}';
     }
 }

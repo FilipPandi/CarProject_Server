@@ -11,7 +11,8 @@ public enum Permissions {
     EDIT_CAR,EDIT_OWNER,
     DELETE_CAR,DELETE_OWNER,
     CAR_COUNT,
-    OWNER_COUNT
+    OWNER_COUNT,
+    MESSENGER
 
 
 }

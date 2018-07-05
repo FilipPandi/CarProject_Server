@@ -1,7 +1,8 @@
 package com.zadaca.zadacaprojekt.domain;
 
-import com.fasterxml.jackson.annotation.*;
-import com.zadaca.zadacaprojekt.dto.CarDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,8 +40,20 @@ public class Owner {
     private Address address;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "owner")
+    @OneToMany (mappedBy = "owner")
     List<Car> cars = new ArrayList<>();
 
+
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", oib=" + oib +
+                ", address=" + address +
+                ", cars=" + cars +
+                '}';
+    }
 }
 

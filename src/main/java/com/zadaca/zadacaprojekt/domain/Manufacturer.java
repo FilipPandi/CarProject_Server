@@ -25,4 +25,12 @@ public class Manufacturer {
     @Enumerated(EnumType.STRING)
     private ManufacturerEnum manufacturerType;
 
+
+    @Override
+    public String toString() {
+        return "Manufacturer{" +
+                "carModelType=" + carModelType +
+                ", manufacturerType=" + manufacturerType +
+                '}';
+    }
 }

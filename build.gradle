@@ -47,4 +47,9 @@ dependencies {
 	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.0.2.RELEASE'
 	compile 'org.apache.commons:commons-lang3:3.0'
 	compile 'joda-time:joda-time:2.+'
+	compile("org.apache.kafka:kafka-clients:1.1.0")
+	compile("org.apache.kafka:kafka-streams:1.1.0")
+	compile("org.springframework.kafka:spring-kafka:2.1.6.RELEASE")
+	compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5")
+
 }

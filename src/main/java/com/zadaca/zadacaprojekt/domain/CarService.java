@@ -47,4 +47,19 @@ public class CarService {
     @ManyToOne()
     @JoinColumn(name = "carId")
     private Car car;
+
+    @Override
+    public String toString() {
+        return "CarService{" +
+                "id=" + id +
+                ", serviceName='" + serviceName + '\'' +
+                ", serviceDate=" + serviceDate +
+                ", workerFirstName='" + workerFirstName + '\'' +
+                ", workerLastName='" + workerLastName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", payed=" + payed +
+                ", car=" + car +
+                '}';
+    }
 }

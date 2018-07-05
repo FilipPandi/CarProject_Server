@@ -19,4 +19,5 @@ public enum CarModelEnum {
     CarModelEnum(String name) {
         this.name = name;
     }
+
 }

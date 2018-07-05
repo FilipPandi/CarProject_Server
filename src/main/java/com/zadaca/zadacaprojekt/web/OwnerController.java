@@ -4,12 +4,17 @@ package com.zadaca.zadacaprojekt.web;
 import com.zadaca.zadacaprojekt.domain.Owner;
 import com.zadaca.zadacaprojekt.dto.OwnerDTO;
 import com.zadaca.zadacaprojekt.service.OwnerManager;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +39,26 @@ private final OwnerManager ownerManager;
             o.setOib(owners.getOib());
 
             OwnerDTO saveOwner = new OwnerDTO(ownerManager.save(o));
+
+        Properties properties = new Properties();
+
+        properties.setProperty("bootstrap.servers", "localhost:9092");
+        properties.setProperty("key.serializer", StringSerializer.class.getName());
+        properties.setProperty("value.serializer", StringSerializer.class.getName());
+
+        properties.setProperty("acks", "1");
+        properties.setProperty("retries", "3");
+        properties.setProperty("linger.ms", "1");
+
+        Producer<String, String> producer = new KafkaProducer<String, String>(properties);
+
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("owners", "3",
+                "First name: " + owners.getFirstName() + " | "
+                        + "Last name: " + owners.getLastName() + " | "
+                        + "OIB: " + owners.getOib() + " | "
+                        + "Address: " + owners.getAddress().getCity() + " Postal number:" + owners.getAddress().getZipCode());
+
+        producer.send(producerRecord);
 
             return saveOwner;
     }

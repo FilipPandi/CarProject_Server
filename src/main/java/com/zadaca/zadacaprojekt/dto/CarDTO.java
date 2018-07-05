@@ -58,5 +58,20 @@ public class CarDTO {
         });
 
     }
+
+    @Override
+    public String toString() {
+        return "CarDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", carType=" + carType +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", yearOfProduction=" + yearOfProduction +
+                ", color='" + color + '\'' +
+                ", manufacturer=" + manufacturer +
+                ", owner=" + owner +
+                ", carServices=" + carServices +
+                '}';
+    }
 }
 

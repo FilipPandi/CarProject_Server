@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name= "cars")
-//TODO: CHECK THIS OUT!
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
 public class Car {
 
@@ -52,6 +51,21 @@ public class Car {
     @JoinColumn(name= "owner_id")
     private Owner owner;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany (mappedBy = "car")
     private List<CarService> carServices = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", carType=" + carType +
+                ", yearOfProduction=" + yearOfProduction +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", color='" + color + '\'' +
+                ", manufacturer=" + manufacturer +
+                ", owner=" + owner +
+                ", carServices=" + carServices +
+                '}';
+    }
 }

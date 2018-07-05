@@ -36,12 +36,11 @@ public class LoginController {
     public LoginController(UserManager usermanager, UserRepository userRepository) {
         this.userManager = usermanager;
         this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
 
     }
 
     @RequestMapping("/rest")
-    public SecurityContext index(HttpServletRequest req, @RequestParam(required = false) String username, @RequestParam(required = false) String password) {
+    public User index(HttpServletRequest req, @RequestParam(required = false) String username, @RequestParam(required = false) String password) {
         Cookie cookie = null;
         req.getCookies();
         req.getAuthType();
@@ -56,7 +55,7 @@ public class LoginController {
                 sc.setAuthentication(auth);
                 req.getSession(true).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
 
-                return sc;
+                return logUser;
             } catch (AuthenticationException e) {
                 throw new HttpServerErrorException(HttpStatus.FORBIDDEN);
         }
@@ -64,7 +63,7 @@ public class LoginController {
 
     @RequestMapping("/")
     public String JwtTokenReturn(HttpServletRequest req, @RequestParam String username) {
-        User tokenUser = userManager.findByUsername(username);
+            User tokenUser = userManager.findByUsername(username);
         JwtUtils.getOnlineUserFromRequest(req, userManager);
         String token = JwtUtils.createJwt(tokenUser);
         try {

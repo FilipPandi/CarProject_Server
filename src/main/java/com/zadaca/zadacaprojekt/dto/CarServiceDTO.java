@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Date;
 
 
 @Getter
@@ -44,5 +43,20 @@ public class CarServiceDTO {
         this.setWorkerFirstName(carService.getWorkerFirstName());
         this.setWorkerLastName(carService.getWorkerLastName());
         this.car = new CarDTO(carService.getCar());
+    }
+
+    @Override
+    public String toString() {
+        return "CarServiceDTO{" +
+                "id=" + id +
+                ", serviceName='" + serviceName + '\'' +
+                ", serviceDate=" + serviceDate +
+                ", description='" + description + '\'' +
+                ", workerFirstName='" + workerFirstName + '\'' +
+                ", workerLastName='" + workerLastName + '\'' +
+                ", price=" + price +
+                ", payed=" + payed +
+                ", car=" + car +
+                '}';
     }
 }

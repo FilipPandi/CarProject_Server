@@ -32,4 +32,15 @@ public class Address {
     @NotNull
     private int zipCode;
 
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + street + '\'' +
+                ", residenceNumber='" + residenceNumber + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode=" + zipCode +
+                '}';
+    }
 }
