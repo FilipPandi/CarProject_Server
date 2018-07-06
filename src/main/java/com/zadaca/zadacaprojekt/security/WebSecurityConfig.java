@@ -65,6 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/car/edit").hasAuthority(Permissions.EDIT_CAR.name())
                 .antMatchers("/owner/edit").hasAuthority(Permissions.EDIT_OWNER.name())
                 .antMatchers("/kafka/producer").hasAuthority(Permissions.MESSENGER.name())
+                .antMatchers("/kafka/getMessages/**").hasAuthority(Permissions.MESSENGER.name())
+                .antMatchers("/kafka/**").hasAuthority(Permissions.MESSENGER.name())
 
                 .antMatchers("/**").permitAll();
     }

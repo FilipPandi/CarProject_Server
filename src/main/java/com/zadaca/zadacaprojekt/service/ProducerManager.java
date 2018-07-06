@@ -8,5 +8,7 @@ public interface ProducerManager {
 
     ProducerMessenger save(ProducerMessenger producerMessenger);
 
-    List<ProducerMessenger> findByReceiverId(Long receiverId);
+    List<ProducerMessenger> findByReceiver(Long receiverId);
+
+    List<ProducerMessenger> findMessages(Long senderId, Long receiverId);
 }

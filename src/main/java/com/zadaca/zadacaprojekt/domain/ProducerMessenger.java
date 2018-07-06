@@ -1,6 +1,8 @@
 package com.zadaca.zadacaprojekt.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -23,6 +25,11 @@ public class ProducerMessenger {
 
     @Column(name = "receiver_id")
     private Long receiverId;
+
+
+    @Column(name= "message_timestamp")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime messageTimeStamp;
 
     @ManyToOne
     @JoinColumn(name= "sender_user_id")

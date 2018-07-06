@@ -24,8 +24,14 @@ public class UserController {
     }
 
     @GetMapping("")
-    public List<User> getUser() {
+    public List<User> getUsers() {
         return userManager.findAll();
+    }
+
+
+    @GetMapping("/getUser/{id}")
+    public User getUser(@PathVariable(required =  false) Long id) {
+        return userManager.findById(id);
     }
 
 

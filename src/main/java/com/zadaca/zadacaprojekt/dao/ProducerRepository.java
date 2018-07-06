@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ProducerRepository extends JpaRepository<ProducerMessenger, Long> {
 
-    List<ProducerMessenger> findByReceiverId(Long receiverId);
+    List<ProducerMessenger> findByReceiverIdOrderByMessageTimeStampDesc(Long receiverId);
+
+    List<ProducerMessenger> findByUser_IdAndReceiverIdOrderByMessageTimeStampDesc(Long senderId, Long receiverId);
 }

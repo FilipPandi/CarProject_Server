@@ -82,19 +82,6 @@ public class ZadacaprojektApplication {
             userManager.save(adminUser);
         }
     }
-//
-//    @PostConstruct
-//    private void kafkaTopicFactory() {
-//
-//        KafkaTopicFactory kafkaTopicFactory = new KafkaTopicFactory();
-//
-//        try {
-//            kafkaTopicFactory.CarTopic("neki");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Topic " + kafkaTopicFactory.CarTopic("neki") + " was created!");
-//    }
 
 
 }

@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @RestController
 @RequestMapping("/kafka")
@@ -41,24 +40,30 @@ public class ProducerController {
 
         Producer<String, String> producer = new KafkaProducer<String, String>(properties);
 
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("Messenger", 1, "1", messages.getMessage());
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("Messenger", "1", messages.getMessage());
 
         producer.send(producerRecord);
         ProducerMessenger prodcerSave = new ProducerMessenger();
 
         User user = userManager.findById(id);
 
-        prodcerSave.setMessage(messages.getMessage());
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(messages.getMessageTimeStamp());
+//        Date now = calendar.getTime();
+//
+
+
+        prodcerSave.setMessage(String.valueOf(producerRecord.value()));
+
         prodcerSave.setUser(user);
         prodcerSave.setReceiverId(messages.getReceiverId());
+        prodcerSave.setMessageTimeStamp(messages.getMessageTimeStamp());
         producerManager.save(prodcerSave);
     }
 
-    @RequestMapping("/getMessages/{receiverId}")
-    public List<ProducerMessenger> getProducerMessages(@PathVariable Long receiverId) {
+    @RequestMapping("/getMessages/{senderId}/{receiverId}")
+    public List<ProducerMessenger> getProducerMessages(@PathVariable Long senderId, @PathVariable Long receiverId) {
 
-
-
-     return producerManager.findByReceiverId(receiverId);
+     return producerManager.findMessages(senderId, receiverId);
     }
 }
