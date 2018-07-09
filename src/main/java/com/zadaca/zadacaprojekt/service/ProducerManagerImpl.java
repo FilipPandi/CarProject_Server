@@ -27,15 +27,15 @@ public class ProducerManagerImpl implements ProducerManager {
 
     @Override
     public List<ProducerMessenger> findMessages(Long senderId, Long receiverId) {
+
         List<ProducerMessenger> messages1 = producerRepository.findByUser_IdAndReceiverIdOrderByMessageTimeStampDesc(senderId, receiverId);
         List<ProducerMessenger> messages2 = producerRepository.findByUser_IdAndReceiverIdOrderByMessageTimeStampDesc(receiverId, senderId);
         List<ProducerMessenger> allMessages = new ArrayList<>();
 
         allMessages.addAll(messages1);
         allMessages.addAll(messages2);
-//        messages1.addAll(messages2);
         allMessages.sort(Comparator.comparing(ProducerMessenger::getMessageTimeStamp).reversed());
-//        allMessages.stream().sorted(Comparator.comparing(ProducerMessenger::getMessageTimeStamp).reversed()).collect(Collectors.toList());
+
         return allMessages;
     }
 }

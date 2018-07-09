@@ -47,12 +47,6 @@ public class ProducerController {
 
         User user = userManager.findById(id);
 
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(messages.getMessageTimeStamp());
-//        Date now = calendar.getTime();
-//
-
-
         prodcerSave.setMessage(String.valueOf(producerRecord.value()));
 
         prodcerSave.setUser(user);
